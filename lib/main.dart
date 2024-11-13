@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Bunnies Store',
+      title: '🐰 bunnies store 🐰',
       theme: ThemeData(
         // Define a pastel pink primary color for a galaxy look.
         colorScheme: ColorScheme.fromSwatch(

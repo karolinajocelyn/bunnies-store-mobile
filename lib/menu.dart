@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:bunnies_store/widgets/left_drawer.dart';
+import 'package:bunnies_store/add_item_form.dart';
 
 class MyHomePage extends StatelessWidget {
   final List<ItemHomepage> items = [
@@ -13,44 +15,15 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          '🐰 bunnies store 🐰',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        title: const Text("🐰 bunnies store 🐰"),
         backgroundColor: Theme.of(context).colorScheme.primary,
       ),
+      drawer: const LeftDrawer(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(top: 16.0),
-                child: Text(
-                  'welcome to bunnies store! 🐰',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18.0,
-                  ),
-                ),
-              ),
-              GridView.count(
-                primary: true,
-                padding: const EdgeInsets.all(20),
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
-                crossAxisCount: 3,
-                shrinkWrap: true,
-                children: items.map((ItemHomepage item) {
-                  return ItemCard(item);
-                }).toList(),
-              ),
-            ],
-          ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: items.map((item) => Expanded(child: ItemCard(item))).toList(),
         ),
       ),
     );
@@ -72,42 +45,41 @@ class ItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: item.color,
-      borderRadius: BorderRadius.circular(12),
-      child: InkWell(
-        onTap: () {
-          String message;
-          if (item.name == "View Product List") {
-            message = "Kamu telah menekan tombol Lihat Daftar Produk";
-          } else if (item.name == "Add Product") {
-            message = "Kamu telah menekan tombol Tambah Produk";
-          } else {
-            message = "Kamu telah menekan tombol Logout";
-          }
-
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(SnackBar(content: Text(message)));
-        },
-        child: Container(
-          padding: const EdgeInsets.all(8),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  item.icon,
-                  color: Colors.white,
-                  size: 30.0,
-                ),
-                const Padding(padding: EdgeInsets.all(3)),
-                Text(
-                  item.name,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(color: Colors.white),
-                ),
-              ],
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Material(
+        color: item.color,
+        borderRadius: BorderRadius.circular(12),
+        child: InkWell(
+          onTap: () {
+            // Check the item name and navigate if it's "Add Product"
+            if (item.name == "Add Product") {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const AddItemFormPage()),
+              );
+            } else {
+              String message = "Kamu telah menekan tombol ${item.name}!";
+              ScaffoldMessenger.of(context)
+                ..hideCurrentSnackBar()
+                ..showSnackBar(SnackBar(content: Text(message)));
+            }
+          },
+          child: Container(
+            height: 150, // Optional: Set a fixed height
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(item.icon, color: Colors.white, size: 40.0),
+                  const SizedBox(height: 8),
+                  Text(
+                    item.name,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

@@ -1,64 +1,54 @@
 # bunnies_store 🐰
 
-## Tugas 7
+## Tugas 8
 
-1. Jelaskan apa yang dimaksud dengan stateless widget dan stateful widget, dan jelaskan perbedaan dari keduanya.
+1. Apa kegunaan const di Flutter? Jelaskan apa keuntungan ketika menggunakan const pada kode Flutter. Kapan sebaiknya kita menggunakan const, dan kapan sebaiknya tidak digunakan?
 
-**StatelessWidget** adalah widget yang tidak memiliki keadaan internal yang dapat berubah. Artinya, tampilan dari widget ini akan selalu sama selama masa hidupnya, karena tidak menyimpan atau mengelola data yang dapat berubah. Contoh dari StatelessWidget termasuk `Icon`, `IconButton`, dan `Text`. StatelessWidget biasanya digunakan untuk elemen UI yang tidak berubah setelah dibuat, seperti ikon atau teks statis.
+Kata kunci `const` digunakan untuk menginisiasi objek yang bersifat *immutable*. Keuntungannya adalah:
+- Flutter dapat mengenali bahwa variabel dengan `const` tidak akan berubah selama siklus hidup aplikasinya sehingga proses mengembangkan aplikasinya menjadi lebih mudah.
+- Objek `const` dievaluasi saat waktu kompilasi, bukan saat runtime sehingga mengurangi beban kerja saat aplikasi dijalankan.
+- Lebih efisien dalam penggunaan memori.
 
-Sebaliknya, **StatefulWidget** adalah widget yang memiliki keadaan internal yang dapat berubah. Widget ini dapat memperbarui tampilannya sebagai respons terhadap interaksi pengguna atau perubahan data. Beberapa contoh dari StatefulWidget adalah `Checkbox`, `Radio`, `Slider`, `InkWell`, `Form`, dan `TextField`. StatefulWidget cocok untuk elemen UI yang membutuhkan pembaruan tampilan sesuai dengan perubahan dalam keadaan atau data yang disimpan, misalnya sebuah form input atau slider yang bisa berubah nilainya.
+Kita sebaiknya menggunakan const jika kita tahu bahwa variable tersebut tidak akan berubah sepanjangan siklus hidup aplikasi, seperti widget, icon, text, dan lainnya.
 
-Perbedaan utama antara keduanya terletak pada kemampuan untuk mengelola dan merespons perubahan keadaan internal. **StatelessWidget** tidak dapat berubah setelah diinisialisasi, sementara **StatefulWidget** dapat memperbarui dirinya sesuai dengan perubahan yang terjadi pada data atau interaksi pengguna. 
+Sebaiknya, kita menghindari penggunaan `const`  jika merasa bahwa widget perlu berubah berdasarkan input pengguna atau data yang diperoleh saat runtime.
 
-sumber = (https://docs.flutter.dev/ui/interactivity#:~:text=Stateful%20and%20stateless%20widgets,-%23&text=A%20widget%20is%20either%20stateful,are%20examples%20of%20stateless%20widgets.)
+Sumber: https://www.dhiwise.com/post/why-flutter-prefer-const-with-constant-constructor
 
-2. Sebutkan widget apa saja yang kamu gunakan pada proyek ini dan jelaskan fungsinya.
+2. Jelaskan dan bandingkan penggunaan Column dan Row pada Flutter. Berikan contoh implementasi dari masing-masing layout widget ini!
 
-- **MaterialApp**: Ini adalah widget root dari aplikasi Flutter yang memberikan tema dasar dan routing. MaterialApp mengatur tema global aplikasi, seperti warna utama dan latar belakang, serta menentukan halaman utama yang akan ditampilkan saat aplikasi dijalankan.
+Pada flutter, **row** menyusun widget anak secara horizontal dari kanan ke kiri, sedangkan **column** menyusun widget anak secara vertikal dari atas ke bawah. Mereka sama-sama memiliki properti utama `maxAxisAlignment` yang mengatur penempatan widget anak di sumbu utama (horizontal untuk row, vertikal untuk column), dan `crossAxisAlignment` yang mengatur penempatan widget anak di sepanjang sumbu sekunder (vertikal untuk row, dan horizontal untuk column).
 
-- **Scaffold**: Scaffold menyediakan struktur dasar halaman di Flutter, termasuk AppBar di bagian atas dan area konten di dalam body. Pada proyek ini, Scaffold digunakan untuk menampilkan AppBar, body, dan komponen-komponen lain pada halaman utama aplikasi.
+Contoh implementasi untuk row adalah:
+Row(
+  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  children: [
+    Icon(Icons.home),
+    Icon(Icons.search),
+    Icon(Icons.person),
+  ],
+)
 
-- **AppBar**: AppBar adalah bilah atas aplikasi yang menampilkan judul aplikasi, yaitu "Bunnies Store". Ini juga memberikan navigasi visual yang familiar bagi pengguna.
+Contoh implementasi untuk column adalah:
+Column(
+  mainAxisAlignment: MainAxisAlignment.center,
+  children: [
+    Text('Judul'),
+    Text('Subjudul'),
+    ElevatedButton(onPressed: () {}, child: Text('Klik Saya')),
+  ],
+)
 
-- **Column**: Widget ini digunakan untuk menyusun widget lain secara vertikal (dari atas ke bawah). Dalam proyek ini, Column menyusun beberapa elemen secara vertikal, seperti teks sambutan dan daftar tombol.
+Sumber: https://www.geeksforgeeks.org/row-and-column-widgets-in-flutter-with-example/
 
-- **Padding**: Padding menambahkan ruang di sekitar widget. Dalam proyek ini, Padding digunakan untuk memberikan jarak antar widget, agar tampilan lebih rapi dan mudah dibaca.
+3. Sebutkan apa saja elemen input yang kamu gunakan pada halaman form yang kamu buat pada tugas kali ini. Apakah terdapat elemen input Flutter lain yang tidak kamu gunakan pada tugas ini? Jelaskan!
 
-- **Text**: Text digunakan untuk menampilkan teks statis. Dalam proyek ini, Text digunakan untuk menampilkan judul aplikasi, teks sambutan, dan nama setiap tombol (misalnya "View Product List", "Add Product", dan "Logout").
+Untuk tugas ini, saya menggunakan `TexFormField` untuk keempat input, dari nama, artist, description, dan price, tetapi untuk price tipe inputnya diatur ke TextInputType.number agar hanya dapat menerima angka. Selain itu, masih banyak elemen input flutter lain seperti checkbox (men-checklist fitur boolean), radio (memilih satu dari multiple choices), switch (checkbox dengan tampilan lebih modern), datepicker (memilih tanggal), slider (memilih hal dalam rentang tertentu), dan lainnya.
 
-- **GridView.count**: `GridView.count` menampilkan widget dalam bentuk grid dengan jumlah kolom yang ditentukan. Di sini, GridView.count digunakan untuk menampilkan tombol dalam tata letak grid dengan tiga kolom.
+4. Bagaimana cara kamu mengatur tema (theme) dalam aplikasi Flutter agar aplikasi yang dibuat konsisten? Apakah kamu mengimplementasikan tema pada aplikasi yang kamu buat?
 
-- **InkWell**: InkWell adalah widget yang merespons sentuhan dengan efek tinta yang mengembang, memberikan umpan balik visual saat pengguna menyentuh area tertentu. Pada proyek ini, InkWell digunakan untuk membungkus tombol agar setiap tombol bereaksi saat ditekan, seperti memunculkan Snackbar.
+Untuk mengatur tema aplikasi flutter agar konsisten, saya menggunakan `ThemeData` pada widget `MaterialApp` di main.dart dimana saya mendefinisikan primary color dan secondary color sehingga warnanya konsisten untuk elemen UI lain dari aplikasinya.
 
-- **Snackbar**: Snackbar adalah widget untuk menampilkan pesan singkat yang sementara di bagian bawah layar. Dalam proyek ini, `Snackbar` digunakan untuk memberi notifikasi kepada pengguna saat tombol ditekan, seperti “Kamu telah menekan tombol Lihat Daftar Produk”.
+5. Bagaimana cara kamu menangani navigasi dalam aplikasi dengan banyak halaman pada Flutter?
 
-- **Card**: Card adalah widget dengan tampilan berbayang yang sering digunakan untuk menampilkan informasi dalam bentuk kotak. Dalam proyek ini, Card digunakan untuk menampilkan informasi tentang NPM, nama, dan kelas pengguna di bagian atas halaman.
-
-- **Icon**: Icon digunakan untuk menampilkan ikon grafis di dalam aplikasi. Pada proyek ini, ikon seperti Icons.list, Icons.add, dan Icons.logout digunakan sebagai visual dari tombol untuk memudahkan pengguna memahami fungsinya.
-
-- **Material**: Material adalah widget yang menyediakan efek material design seperti bayangan dan warna latar belakang. Di sini, Material digunakan untuk memberikan warna latar pada tombol-tombol utama, dengan masing-masing tombol memiliki warna pastel yang berbeda.
-
-- **Center**: Center digunakan untuk menempatkan widget lain di tengah area yang tersedia. Dalam proyek ini, Center digunakan agar konten utama terlihat rapi dan berpusat di layar.
-
-3. Apa fungsi dari `setState()`? Jelaskan variabel apa saja yang dapat terdampak dengan fungsi tersebut.
-
-Dalam Flutter, fungsi setState digunakan untuk memberi tahu framework bahwa ada perubahan pada state internal sebuah widget yang memerlukan pembaruan tampilan. Ketika setState dipanggil, Flutter menandai widget tersebut sebagai "kotor" (dirty), yang berarti widget akan dibangun ulang pada frame berikutnya untuk mencerminkan perubahan state.
-
-Namun, penting untuk tidak memanggil setState selama fase build. Fase build adalah saat di mana Flutter membangun dan mengonfigurasi widget untuk frame berikutnya. Memanggil setState selama fase ini dapat menyebabkan inkonsistensi dan kesalahan, karena widget sedang dalam proses dibangun. Kesalahan ini biasanya ditandai dengan pesan: "SetState or markNeedsBuild called during build."
-
-Untuk menghindari masalah ini, pastikan setState hanya dipanggil di luar metode build atau dalam respons terhadap interaksi pengguna, seperti penekanan tombol atau hasil dari operasi asinkron. Dengan demikian, Anda memastikan bahwa pembaruan state terjadi pada waktu yang tepat tanpa mengganggu proses build Flutter.
-
-sumber: (https://www.dhiwise.com/post/how-to-resolve-flutter-setstate-called-during-build-issue)
-
-4. Jelaskan perbedaan antara `const` dengan `final`.
-
-Perbedaan utama antara `const` dan `final` di Dart adalah pada waktu penentuan nilainya. `final` digunakan untuk variabel yang nilainya hanya ditetapkan sekali, tetapi penetapan ini bisa dilakukan saat aplikasi berjalan (runtime). Ini cocok untuk nilai yang mungkin tidak diketahui pada waktu kompilasi, seperti waktu saat ini dengan `DateTime.now()`.
-
-Sebaliknya, `const` digunakan untuk nilai yang sepenuhnya konstan dan harus sudah diketahui pada waktu kompilasi. Artinya, nilai `const` tidak bisa bergantung pada data atau operasi yang hanya bisa diperoleh saat runtime. Nilai `const` benar-benar tetap dan tidak bisa diubah atau diinisialisasi ulang, membuatnya cocok untuk konstanta seperti angka tetap atau daftar warna yang sudah didefinisikan.
-
-5. Jelaskan bagaimana cara kamu mengimplementasikan checklist-checklist di atas.
-
-- Pertama, saya membuat folder baru sebagai direktori utama dari projectnya.
-- Saya melakukan `flutter create bunnies-store` untuk menginisiasi project yang baru.
-- Saya menambahkan warna pada main.dart dan juga menambahkan file menu.dart yang mirip dengan tutorial tetapi dengan judul file dan juga tema warna yang berbeda.
-- Saya melakukan `git init` dan `add-commit-push` agar project saya terlihat di github.
+Saya menangani navigasi dengan menggunakan `Navigator` dan `MaterialPageRoute` yang bekerja sebagai stack untuk menangani perpindahan page dari aplikasi. Dengan Navigator.pushReplacement, saya menambahkan page baru ke stack dari navigation, lalu ketika menekan tombol "submit" pada add_item_form.dart, aplikasi akan kembali ke halaman sebelumnya. Saya juga memakai Navigator.push ketika membuka page add product dari halaman utama.
