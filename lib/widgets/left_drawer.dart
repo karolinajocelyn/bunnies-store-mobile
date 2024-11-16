@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:bunnies_store/menu.dart';
-import 'package:bunnies_store/add_item_form.dart';
+import 'package:bunnies_store_mobile/screens/menu.dart';
+import 'package:bunnies_store_mobile/screens/add_item_form.dart';
 
 class LeftDrawer extends StatelessWidget {
   const LeftDrawer({super.key});

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:bunnies_store/menu.dart';
+import 'package:provider/provider.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart'; // Pastikan library ini diimpor
+import 'package:bunnies_store_mobile/screens/login.dart';
+import 'package:bunnies_store_mobile/screens/register.dart';
+import 'package:bunnies_store_mobile/screens/menu.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,20 +14,31 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: '🐰 bunnies store 🐰',
-      theme: ThemeData(
-        // Define a pastel pink primary color for a galaxy look.
-        colorScheme: ColorScheme.fromSwatch(
-          primarySwatch: Colors.pink,
-        ).copyWith(
-          primary: Color(0xFFEFB2CC), // Soft pastel pink
-          secondary: Color(0xFFDBC3E6), // Light pastel lavender as accent
+    return MultiProvider(
+      providers: [
+        Provider<CookieRequest>(
+          create: (_) => CookieRequest(),
         ),
-        scaffoldBackgroundColor: Colors.white, // Light pastel background
-        useMaterial3: true,
+      ],
+      child: MaterialApp(
+        title: '🐰 bunnies store 🐰',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSwatch(
+            primarySwatch: Colors.pink,
+          ).copyWith(
+            primary: const Color(0xFFEFB2CC),
+            secondary: const Color(0xFFDBC3E6),
+          ),
+          scaffoldBackgroundColor: Colors.white,
+          useMaterial3: true,
+        ),
+        routes: {
+          '/login': (context) => const LoginPage(),
+          '/register': (context) => const RegisterPage(), // Tambahkan route untuk halaman register
+          '/menu': (context) => MyHomePage(),
+        },
+        home: const LoginPage(), // Login Page sebagai halaman pertama
       ),
-      home: MyHomePage(),
     );
   }
 }
